@@ -70,12 +70,9 @@ We used complex SQL queries to address key business questions:
 
 - **Branch Performance:**  
   ```sql
-SELECT branch,
-       city,
-       round((profit_margin * total_price),2) as profit
-FROM walmart
-ORDER BY profit DESC
-Limit 3;
+     SELECT branch, city,round((profit_margin * total_price),2) as profit
+     FROM walmart
+     ORDER BY profit DESC Limit 3;
   ```  
   📌 *Result:* WALM052 in Mansfield had the highest profit.  
 
