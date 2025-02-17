@@ -60,7 +60,7 @@ This project is an end-to-end data analysis solution designed to extract critica
 - **Table Creation & Data Insertion:**  
   ```python
   from sqlalchemy import create_engine
-  engine = create_engine('mysql+mysqlconnector://user:password@host/db_name')
+  engine = create_engine('mysql+mysqlconnector://user:password@host/db_name') #add your username, password and db details
   df.to_sql('walmart_sales', con=engine, if_exists='replace', index=False)
   ```  
 - **Validation:** Execute SQL queries to verify correct data loading.  
@@ -70,17 +70,19 @@ We used complex SQL queries to address key business questions:
 
 - **Branch Performance:**  
   ```sql
-  SELECT branch, SUM(profit) AS total_profit
-  FROM walmart_sales
-  GROUP BY branch
-  ORDER BY total_profit DESC;
+SELECT branch,
+       city,
+       round((profit_margin * total_price),2) as profit
+FROM walmart
+ORDER BY profit DESC
+Limit 3;
   ```  
   📌 *Result:* WALM052 in Mansfield had the highest profit.  
 
 - **Best-Selling Categories:**  
   ```sql
-  SELECT category, SUM(total_amount) AS revenue
-  FROM walmart_sales
+  SELECT category, SUM(total_price) AS revenue
+  FROM walmart
   GROUP BY category
   ORDER BY revenue DESC;
   ```  
@@ -89,7 +91,7 @@ We used complex SQL queries to address key business questions:
 - **Sales Trends Over Time:**  
   ```sql
   SELECT DATE_FORMAT(date, '%Y-%m') AS month, SUM(total_price) AS revenue
-  FROM walmart_sales
+  FROM walmart
   GROUP BY month
   ORDER BY month;
   ```  
